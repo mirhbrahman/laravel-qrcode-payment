@@ -19,15 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['middleware' => 'auth'], function(){
+    
+    Route::resource('qrcodes', 'QrcodeController');
 
-Auth::routes();
+    Route::resource('roles', 'RoleController');
 
-Route::get('/home', 'HomeController@index');
+    Route::resource('transactions', 'TransactionController');
 
-Route::resource('qrcodes', 'QrcodeController');
-
-Route::resource('roles', 'RoleController');
-
-Route::resource('transactions', 'TransactionController');
-
-Route::resource('users', 'UserController');
+    Route::resource('users', 'UserController');
+});
