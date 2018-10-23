@@ -25,8 +25,13 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('users', 'UserController');
 
-    Route::resource('transactions', 'TransactionController');
+    Route::resource('accountHistories', 'AccountHistoryController');
+    
+    Route::resource('transactions', 'TransactionController')->only(['index', 'show']);;
     // Only admin can view this
+    Route::resource('accounts', 'AccountController')->middleware('checkadmin');
+    
     Route::resource('roles', 'RoleController')->middleware('checkadmin');
     
 });
+
