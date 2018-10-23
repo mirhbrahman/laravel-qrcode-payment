@@ -91,4 +91,11 @@ class User extends Model
     public function role(){
         return $this->belongsTo('App\Models\Role');
     }
+
+    public function transactions(){
+        return $this->hasMany('App\Models\Transaction');
+    }
+    public function qrcodes(){
+        return $this->hasMany('App\Models\Qrcode');
+    }
 }

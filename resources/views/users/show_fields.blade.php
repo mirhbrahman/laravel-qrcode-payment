@@ -30,3 +30,14 @@
 </div>
 
 
+
+@if ($user->id == Auth::user()->id || Auth::role_id < 3)
+    <div class="col-md-12">
+        <h3 class="text-center">Transactions</h3>
+        @include('transactions.table')
+    </div>
+    <div class="col-md-12">
+        <h3 class="text-center">QRCodes</h3>
+         @include('qrcodes.table')
+    </div>
+@endif

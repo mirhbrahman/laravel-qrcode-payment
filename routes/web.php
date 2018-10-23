@@ -23,9 +23,10 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::resource('qrcodes', 'QrcodeController');
 
-    Route::resource('roles', 'RoleController');
+    Route::resource('users', 'UserController');
 
     Route::resource('transactions', 'TransactionController');
-
-    Route::resource('users', 'UserController');
+    // Only admin can view this
+    Route::resource('roles', 'RoleController')->middleware('checkadmin');
+    
 });

@@ -25,7 +25,7 @@
     <!-- User Field -->
     <div class="form-group">
         {!! Form::label('user_name', 'User Name:') !!}
-        <p>{!! $qrcode->user_id !!}</p>
+        <p>{!! $qrcode->user->name !!}</p>
     </div>
 
     <!-- Website Field -->
@@ -43,19 +43,13 @@
     <!-- Status Field -->
     <div class="form-group">
         {!! Form::label('status', 'Status:') !!}
-        <p>{!! $qrcode->status !!}</p>
+        <p>{!! $qrcode->status ? 'Active' : 'Inactive' !!}</p>
     </div>
 
     <!-- Created At Field -->
     <div class="form-group">
         {!! Form::label('created_at', 'Created At:') !!}
-        <p>{!! $qrcode->created_at !!}</p>
-    </div>
-
-    <!-- Updated At Field -->
-    <div class="form-group">
-        {!! Form::label('updated_at', 'Updated At:') !!}
-        <p>{!! $qrcode->updated_at !!}</p>
+        <p>{!! $qrcode->created_at->format('D d, M, Y h:i') !!}</p>
     </div>
     @endif
 
@@ -69,3 +63,11 @@
         </p>
     </div>
 </div>
+
+
+@if ($qrcode->user_id == Auth::user()->id || Auth::role_id < 3)
+<div class="col-md-12">
+    <h3 class="text-center">Transactions done on this QRCode</h3>
+    @include('transactions.table')
+</div>
+@endif

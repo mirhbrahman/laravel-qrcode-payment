@@ -81,7 +81,9 @@ class RoleController extends AppBaseController
             return redirect(route('roles.index'));
         }
 
-        return view('roles.show')->with('role', $role);
+        return view('roles.show')
+        ->with('role', $role)
+        ->with('users', $role->users);
     }
 
     /**

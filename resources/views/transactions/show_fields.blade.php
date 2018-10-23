@@ -60,3 +60,5 @@
     <p>{!! $transaction->updated_at->format('D d, M, Y h:i') !!}</p>
 </div>
 
+
+

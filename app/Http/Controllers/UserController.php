@@ -19,6 +19,7 @@ class UserController extends AppBaseController
 
     public function __construct(UserRepository $userRepo)
     {
+        $this->middleware('checkmoderator')->only('index');
         $this->userRepository = $userRepo;
     }
 
@@ -82,7 +83,10 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('users.show')->with('user', $user);
+        return view('users.show')
+        ->with('user', $user)
+        ->with('transactions', $user->transactions)
+        ->with('qrcodes', $user->qrcodes);
     }
 
     /**
@@ -127,7 +131,12 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
+        $input = $request->all();
+        if(!empty($input['password'])){
+            $input['password'] = bcrypt($input['password']);
+        }
+
+        $user = $this->userRepository->update($input, $id);
 
         Flash::success('User updated successfully.');
 

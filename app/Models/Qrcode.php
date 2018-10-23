@@ -116,5 +116,12 @@ class Qrcode extends Model
         
     ];
 
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function transactions(){
+        return $this->hasMany('App\Models\Transaction');
+    }
     
 }
