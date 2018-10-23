@@ -1,25 +1,32 @@
 <!-- Id Field -->
 <div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{!! $transaction->id !!}</p>
-</div>
-
-<!-- User Id Field -->
-<div class="form-group">
-    {!! Form::label('user_id', 'User Id:') !!}
-    <p>{!! $transaction->user_id !!}</p>
+    <p>Transaction ID: #{!! $transaction->id !!}</p>
 </div>
 
 <!-- Qrcode Id Field -->
 <div class="form-group">
-    {!! Form::label('qrcode_id', 'Qrcode Id:') !!}
-    <p>{!! $transaction->qrcode_id !!}</p>
+    {!! Form::label('qrcode_id', 'Product Name:') !!}
+    <p><a href="{{ route('qrcodes.show', $transaction->qrcode_id) }}">{!! $transaction->qrcode->product_name !!}</a></p>
 </div>
+
+
+<!-- Amount Field -->
+<div class="form-group">
+    {!! Form::label('amount', 'Amount:') !!}
+    <p>${!! $transaction->amount !!}</p>
+</div>
+
+<!-- User Id Field -->
+<div class="form-group">
+    {!! Form::label('user_id', 'Buyer Name:') !!}
+    <p>{!! $transaction->user->name !!} | {!! $transaction->user->email !!}</p>
+</div>
+
 
 <!-- Qrcode Owner Id Field -->
 <div class="form-group">
-    {!! Form::label('qrcode_owner_id', 'Qrcode Owner Id:') !!}
-    <p>{!! $transaction->qrcode_owner_id !!}</p>
+    {!! Form::label('qrcode_owner_id', 'Qrcode Owner Name:') !!}
+    <p>{!! $transaction->qrcode_owner->name !!} | {!! $transaction->qrcode_owner->email !!}</p>
 </div>
 
 <!-- Payment Method Field -->
@@ -34,11 +41,6 @@
     <p>{!! $transaction->message !!}</p>
 </div>
 
-<!-- Amount Field -->
-<div class="form-group">
-    {!! Form::label('amount', 'Amount:') !!}
-    <p>{!! $transaction->amount !!}</p>
-</div>
 
 <!-- Status Field -->
 <div class="form-group">
@@ -49,12 +51,12 @@
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $transaction->created_at !!}</p>
+    <p>{!! $transaction->created_at->format('D d, M, Y h:i') !!}</p>
 </div>
 
 <!-- Updated At Field -->
 <div class="form-group">
     {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $transaction->updated_at !!}</p>
+    <p>{!! $transaction->updated_at->format('D d, M, Y h:i') !!}</p>
 </div>
 
