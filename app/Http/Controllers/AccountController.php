@@ -22,7 +22,7 @@ class AccountController extends AppBaseController
 
     public function __construct(AccountRepository $accountRepo)
     {
-        $this->middleware('checkmoderator')->only(['index','create','store']);
+        $this->middleware('checkmoderator')->only(['create','store']);
         $this->accountRepository = $accountRepo;
     }
 
@@ -34,8 +34,12 @@ class AccountController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->accountRepository->pushCriteria(new RequestCriteria($request));
-        $accounts = $this->accountRepository->all();
+        if(Auth::user()->role_id < 3){
+            $this->accountRepository->pushCriteria(new RequestCriteria($request));
+            $accounts = $this->accountRepository->all();
+        }else{
+            $accounts = AccountModel::where('user_id', Auth::user()->id)->get();
+        }
 
         return view('accounts.index')
             ->with('accounts', $accounts);

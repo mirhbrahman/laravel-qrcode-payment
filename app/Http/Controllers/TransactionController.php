@@ -33,9 +33,9 @@ class TransactionController extends AppBaseController
     {
         if(Auth::user()->role_id < 3){
             $this->transactionRepository->pushCriteria(new RequestCriteria($request));
-            $transactions = $this->transactionRepository->all();
+            $transactions = $this->transactionRepository->orderBy('id', 'desc')->all();
         }else{
-            $transactions = TransactionModel::where('user_id', Auth::user()->id)->get();
+            $transactions = TransactionModel::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         }
         
 

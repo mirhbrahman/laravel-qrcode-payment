@@ -20,7 +20,7 @@
         </a>
     </div>
 
-    @if (!Auth::guest() && ($qrcode->user_id == Auth::user()->id || Auth::role_id
+    @if (!Auth::guest() && ($qrcode->user_id == Auth::user()->id || Auth::user()->role_id
     < 3)) <hr />
     <!-- User Field -->
     <div class="form-group">
@@ -62,12 +62,19 @@
             <img src="{{ asset($qrcode->qrcode_path) }}" alt="">
         </p>
     </div>
+
+    @if (!Auth::guest())
+    @include('qrcodes.paystack-form')
+    @else
+    You need to login to pay
+    @endif
+
 </div>
 
 
-@if (!Auth::guest() && ($qrcode->user_id == Auth::user()->id || Auth::role_id < 3))
-<div class="col-md-12">
+@if (!Auth::guest() && ($qrcode->user_id == Auth::user()->id || Auth::user()->role_id
+< 3)) <div class="col-md-12">
     <h3 class="text-center">Transactions done on this QRCode</h3>
     @include('transactions.table')
-</div>
-@endif
+    </div>
+    @endif

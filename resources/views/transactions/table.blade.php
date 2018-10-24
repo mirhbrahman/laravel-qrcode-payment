@@ -6,13 +6,15 @@
             <th>Method</th>
             <th>Amount</th>
             <th>Status</th>
-            <th colspan="3">Action</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($transactions as $transaction)
         <tr>
-            <td>{!! $transaction->qrcode->product_name !!}</td>
+            <td>{!! $transaction->qrcode->product_name !!}
+            <small> | {{ $transaction->created_at->format('D d, M, Y, h:i') }}</small>
+            </td>
             <td>{!! $transaction->user->name !!}</td>
             <td>{!! $transaction->payment_method !!}</td>
             <td>${!! $transaction->amount !!}</td>

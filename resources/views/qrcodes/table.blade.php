@@ -6,7 +6,7 @@
         <th>Website</th>
         <th>Amount</th>
         <th>Status</th>
-            <th colspan="3">Action</th>
+        <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@
                 @endif
             </td>
             <td>
-                @if ($qrcode->user_id == Auth::user()->id || Auth::role_id < 3)
+                @if ($qrcode->user_id == Auth::user()->id || Auth::user()->role_id < 3)
                 {!! Form::open(['route' => ['qrcodes.destroy', $qrcode->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('qrcodes.show', [$qrcode->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>

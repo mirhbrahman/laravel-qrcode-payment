@@ -10,6 +10,7 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
+                    @include('flash::message')
                     @include('transactions.show_fields')
                     <a href="{!! route('transactions.index') !!}" class="btn btn-default">Back</a>
                 </div>

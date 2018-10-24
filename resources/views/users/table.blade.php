@@ -4,7 +4,7 @@
             <th>Name</th>
             <th>User Level</th>
             <th>Email</th>
-            <th colspan="3">Action</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
