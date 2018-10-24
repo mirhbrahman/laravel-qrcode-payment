@@ -1,9 +1,4 @@
-<!-- User Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
-</div>
-
+@if(Auth::user()->role_id == 1)
 <!-- Balance Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('balance', 'Balance:') !!}
@@ -22,10 +17,20 @@
     {!! Form::number('total_debit', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Withdrawl Method Field -->
+<!-- Paid Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('withdrawl_method', 'Withdrawl Method:') !!}
-    {!! Form::text('withdrawl_method', null, ['class' => 'form-control']) !!}
+    {!! Form::label('paid', 'Paid:') !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('paid', false) !!}
+        {!! Form::checkbox('paid', '1', null) !!} 1
+    </label>
+</div>
+@endif
+
+<!-- Withdrawal Method Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('withdrawal_method', 'Withdrawal Method:') !!}
+    {!! Form::text('withdrawal_method', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Payment Email Field -->
@@ -52,35 +57,6 @@
     {!! Form::text('bank_account', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Apply For Payout Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('apply_for_payout', 'Apply For Payout:') !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('apply_for_payout', false) !!}
-        {!! Form::checkbox('apply_for_payout', '1', null) !!} 1
-    </label>
-</div>
-
-<!-- Paid Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('paid', 'Paid:') !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('paid', false) !!}
-        {!! Form::checkbox('paid', '1', null) !!} 1
-    </label>
-</div>
-
-<!-- Last Date Applied Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('last_date_applied', 'Last Date Applied:') !!}
-    {!! Form::date('last_date_applied', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Last Date Paid Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('last_date_paid', 'Last Date Paid:') !!}
-    {!! Form::date('last_date_paid', null, ['class' => 'form-control']) !!}
-</div>
 
 <!-- Country Field -->
 <div class="form-group col-sm-6">

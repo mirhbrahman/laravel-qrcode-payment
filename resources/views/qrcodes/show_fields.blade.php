@@ -20,8 +20,8 @@
         </a>
     </div>
 
-    @if ($qrcode->user_id == Auth::user()->id || Auth::role_id
-    < 3) <hr />
+    @if (!Auth::guest() && ($qrcode->user_id == Auth::user()->id || Auth::role_id
+    < 3)) <hr />
     <!-- User Field -->
     <div class="form-group">
         {!! Form::label('user_name', 'User Name:') !!}
@@ -65,7 +65,7 @@
 </div>
 
 
-@if ($qrcode->user_id == Auth::user()->id || Auth::role_id < 3)
+@if (!Auth::guest() && ($qrcode->user_id == Auth::user()->id || Auth::role_id < 3))
 <div class="col-md-12">
     <h3 class="text-center">Transactions done on this QRCode</h3>
     @include('transactions.table')

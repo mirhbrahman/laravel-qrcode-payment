@@ -8,6 +8,8 @@ use App\Repositories\TransactionRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Auth;
+use App\Models\Transaction as TransactionModel;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -29,8 +31,13 @@ class TransactionController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->transactionRepository->pushCriteria(new RequestCriteria($request));
-        $transactions = $this->transactionRepository->all();
+        if(Auth::user()->role_id < 3){
+            $this->transactionRepository->pushCriteria(new RequestCriteria($request));
+            $transactions = $this->transactionRepository->all();
+        }else{
+            $transactions = TransactionModel::where('user_id', Auth::user()->id)->get();
+        }
+        
 
         return view('transactions.index')
             ->with('transactions', $transactions);

@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Account
+            Account : <a href="{{ route('users.show', $account->user_id) }}">{{ $account->user->email }}</a>
         </h1>
    </section>
    <div class="content">

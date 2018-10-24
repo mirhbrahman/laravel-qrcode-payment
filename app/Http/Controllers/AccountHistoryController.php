@@ -18,6 +18,7 @@ class AccountHistoryController extends AppBaseController
 
     public function __construct(AccountHistoryRepository $accountHistoryRepo)
     {
+        $this->middleware('checkmoderator')->only(['index','create','store']);
         $this->accountHistoryRepository = $accountHistoryRepo;
     }
 

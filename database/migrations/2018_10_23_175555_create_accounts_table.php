@@ -24,7 +24,7 @@ class CreateAccountsTable extends Migration
             $table->string('bank_name')->nullable();
             $table->string('bank_branch')->nullable();
             $table->string('bank_account')->nullable();
-            $table->tinyInteger('apply_for_payout')->default(0);
+            $table->tinyInteger('applied_for_payout')->default(0);
             $table->tinyInteger('paid')->default(0);
             $table->date('last_date_applied')->nullable();
             $table->date('last_date_paid')->nullable();

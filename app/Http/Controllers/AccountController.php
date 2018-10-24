@@ -8,6 +8,10 @@ use App\Repositories\AccountRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Auth;
+use Carbon\Carbon;
+use App\Models\Account as AccountModel;
+use App\Models\AccountHistory as AccountHistoryModel;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -18,6 +22,7 @@ class AccountController extends AppBaseController
 
     public function __construct(AccountRepository $accountRepo)
     {
+        $this->middleware('checkmoderator')->only(['index','create','store']);
         $this->accountRepository = $accountRepo;
     }
 
@@ -34,6 +39,72 @@ class AccountController extends AppBaseController
 
         return view('accounts.index')
             ->with('accounts', $accounts);
+    }
+
+    public function apply_for_payout(Request $request){
+        $id = $request->apply_for_payout;
+        $account = $this->accountRepository->findWithoutFail($id);
+
+        if (empty($account)) {
+            Flash::error('Account not found');
+
+            return redirect(route('accounts.index'));
+        }
+
+        if (Auth::user()->id != $account->user_id) {
+            Flash::error('You cannot perform this operation');
+
+            return redirect(route('accounts.index'));
+        }
+
+        AccountModel::where('id', $account->id)->update([
+            'applied_for_payout' => 1,
+            'paid' => 0,
+            'last_date_applied' => Carbon::now()->toDateTimeString(),
+        ]);
+
+        AccountHistoryModel::create([
+            'user_id' => Auth::user()->id,
+            'account_id' => $account->id,
+            'message' => 'Payout request initiated by account owner',
+        ]);
+
+        Flash::success('Application successfull');
+
+        return redirect()->back();
+    }
+
+    public function mark_as_paid(Request $request){
+        $id = $request->mark_as_paid;
+        $account = $this->accountRepository->findWithoutFail($id);
+
+        if (empty($account)) {
+            Flash::error('Account not found');
+
+            return redirect(route('accounts.index'));
+        }
+
+        if (Auth::user()->role_id > 2) {
+            Flash::error('You cannot perform this operation');
+
+            return redirect(route('accounts.index'));
+        }
+
+        AccountModel::where('id', $account->id)->update([
+            'applied_for_payout' => 0,
+            'paid' => 1,
+            'last_date_paid' => Carbon::now()->toDateTimeString(),
+        ]);
+
+        AccountHistoryModel::create([
+            'user_id' => $account->user_id,
+            'account_id' => $account->id,
+            'message' => 'Payment completed by admin:'.Auth::user()->id,
+        ]);
+
+        Flash::success('Mark as paid Successfull');
+
+        return redirect()->back();
     }
 
     /**
@@ -73,7 +144,12 @@ class AccountController extends AppBaseController
      */
     public function show($id)
     {
-        $account = $this->accountRepository->findWithoutFail($id);
+        if(Auth::user()->role_id < 3){
+            $account = $this->accountRepository->findWithoutFail($id);
+        }else{
+            $account = AccountModel::where('user_id', Auth::user()->id)->first();
+        }
+        
 
         if (empty($account)) {
             Flash::error('Account not found');
@@ -81,7 +157,9 @@ class AccountController extends AppBaseController
             return redirect(route('accounts.index'));
         }
 
-        return view('accounts.show')->with('account', $account);
+        return view('accounts.show')
+        ->with('account', $account)
+        ->with('accountHistories', $account->account_histories);
     }
 
     /**

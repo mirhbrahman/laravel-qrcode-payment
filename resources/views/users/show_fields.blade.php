@@ -16,12 +16,6 @@
     <p>{!! $user->email !!}</p>
 </div>
 
-<!-- Email Verified At Field -->
-<div class="form-group">
-    {!! Form::label('email_verified_at', 'Email Verified At:') !!}
-    <p>{!! $user->email_verified_at !!}</p>
-</div>
-
 
 <!-- Created At Field -->
 <div class="form-group">
