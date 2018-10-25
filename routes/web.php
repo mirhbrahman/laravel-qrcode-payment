@@ -20,6 +20,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
+
+    Route::get('/users/api',function(){
+        return view('users.token');
+    })->name('users.api');
     
     Route::resource('qrcodes', 'QrcodeController')->except('show');
 

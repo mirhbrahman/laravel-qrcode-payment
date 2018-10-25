@@ -31,3 +31,8 @@
             <a href="{!! route('roles.index') !!}"><i class="fa fa-edit"></i><span>Roles</span></a>
         </li>
         @endif
+
+
+        <li class="{{ Request::is('users*') ? 'active' : '' }}">
+            <a href="{{ route('users.api') }}"><i class="fa fa-edit"></i><span>API</span></a>
+        </li>
