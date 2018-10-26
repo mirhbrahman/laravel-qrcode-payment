@@ -1,8 +1,8 @@
-<li class="{{ Request::is('users*') ? 'active' : '' }}">
-    <a href="{{ route('users.show', Auth::user()->id) }}"><i class="fa fa-edit"></i><span>My Profile</span></a>
+<li class="{{ Request::is('profile*') ? 'active' : '' }}">
+    <a href="{{ route('users.profile', Auth::user()->id) }}"><i class="fa fa-edit"></i><span>My Profile</span></a>
 </li>
-<li class="{{ Request::is('accounts*') ? 'active' : '' }}">
-    <a href="{{ route('accounts.show', Auth::user()->id) }}"><i class="fa fa-edit"></i><span>My Account</span></a>
+<li class="{{ Request::is('my_accounts*') ? 'active' : '' }}">
+    <a href="{{ route('accounts.my_account', Auth::user()->id) }}"><i class="fa fa-edit"></i><span>My Account</span></a>
 </li>
 
 <li class="{{ Request::is('transactions*') ? 'active' : '' }}">
@@ -33,6 +33,6 @@
         @endif
 
 
-        <li class="{{ Request::is('users*') ? 'active' : '' }}">
+        <li class="{{ Request::is('api*') ? 'active' : '' }}">
             <a href="{{ route('users.api') }}"><i class="fa fa-edit"></i><span>API</span></a>
         </li>

@@ -21,14 +21,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::get('/users/api',function(){
+    Route::get('api',function(){
         return view('users.token');
     })->name('users.api');
     
     Route::resource('qrcodes', 'QrcodeController')->except('show');
 
     Route::resource('users', 'UserController');
+    Route::get('profile/{id}', 'UserController@show')->name('users.profile');
+
     Route::resource('accounts', 'AccountController');
+    Route::get('my_accounts/{id}', 'AccountController@show')->name('accounts.my_account');
 
     Route::resource('accountHistories', 'AccountHistoryController');
     
