@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>QRCode</title>
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <!-- Bootstrap 3.3.7 -->
@@ -170,7 +171,8 @@
         $(document).ready( function () {
             $('table').DataTable();
         } );
-    </script>
+        </script>
+
 
 
     @yield('scripts')

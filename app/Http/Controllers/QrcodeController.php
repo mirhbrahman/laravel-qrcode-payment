@@ -13,6 +13,7 @@ use Auth;
 use App\Models\Qrcode as QrcodeModel;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Http\Resources\Qrcode as QrcodeResource;
 use App\Http\Resources\QrcodeCollection as QrcodeResourceCollection;
 
 class QrcodeController extends AppBaseController
@@ -40,7 +41,11 @@ class QrcodeController extends AppBaseController
             $qrcodes = QrcodeModel::where('user_id', Auth::user()->id)->get();
         }
 
-        // return new QrcodeResourceCollection($qrcodes);
+        // Check if request expects json
+        if($request->expectsJson()){
+            return new QrcodeResourceCollection($qrcodes);
+        }
+        
         return view('qrcodes.index')
             ->with('qrcodes', $qrcodes);
     }
@@ -83,6 +88,11 @@ class QrcodeController extends AppBaseController
         ->update([
             'qrcode_path' => $input['qrcode_path']
         ]);
+
+        // Check if request expects json
+        if($request->expectsJson()){
+            return new QrcodeResource($newQRCode);
+        }
         
         if($newQRCode){
             Flash::success('Qrcode saved successfully.');
@@ -154,6 +164,11 @@ class QrcodeController extends AppBaseController
         }
 
         $qrcode = $this->qrcodeRepository->update($request->all(), $id);
+
+         // Check if request expects json
+         if($request->expectsJson()){
+            return new QrcodeResource($newQRCode);
+        }
 
         Flash::success('Qrcode updated successfully.');
 
